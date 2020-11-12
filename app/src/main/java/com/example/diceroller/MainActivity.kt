@@ -22,22 +22,39 @@ class MainActivity : AppCompatActivity() {
         val rollButton: Button = findViewById(R.id.button)
 
         // Set a click listener on the button to roll the dice when the user taps the button
-        rollButton.setOnClickListener { rollDice() }
+        rollButton.setOnClickListener { rollDices() }
 
         // Do a dice roll when the app starts
-        rollDice()
+        rollDices()
+    }
+
+    private fun rollDices() {
+        val diceImage1: ImageView = findViewById(R.id.terning1)
+        val dice1 = rollDice(diceImage1)
+
+        val diceImage2: ImageView = findViewById(R.id.terning2)
+        val dice2 = rollDice(diceImage2)
+
+        val diceImage3: ImageView = findViewById(R.id.terning3)
+        val dice3 = rollDice(diceImage3)
+
+        val diceImage4: ImageView = findViewById(R.id.terning4)
+        val dice4 = rollDice(diceImage4)
+
+        val diceImage5: ImageView = findViewById(R.id.terning5)
+        val dice5 = rollDice(diceImage5)
     }
 
     /**
      * Roll the dice and update the screen with the result.
      */
-    private fun rollDice() {
+    private fun rollDice(diceImage: ImageView): Int {
         // Create new Dice object with 6 sides and roll it
         val dice = Dice(6)
         val diceRoll = dice.roll()
 
         // Find the ImageView in the layout
-        val diceImage: ImageView = findViewById(R.id.terning5)
+        val diceImage: ImageView = findViewById(diceImage.id)
 
         // Determine which drawable resource ID to use based on the dice roll
         val drawableResource = when (diceRoll) {
@@ -54,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         // Update the content description
         diceImage.contentDescription = diceRoll.toString()
+        return diceRoll
     }
 }
 
