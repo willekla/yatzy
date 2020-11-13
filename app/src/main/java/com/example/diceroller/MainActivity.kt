@@ -1,16 +1,23 @@
 package com.example.diceroller
 
+import android.R.drawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.diceroller.databinding.ActivityMainBinding
 
 /**
  * This activity allows the user to roll a dice and view the result
  * on the screen.
  */
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityMainBinding
+    private var count = 3;
+    var resTxt = ""
     /**
      * This method is called when the Activity is created.
      */
@@ -18,31 +25,56 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         // Find the Button in the layout
-        val rollButton: Button = findViewById(R.id.button)
+        val rollButton: Button = findViewById(R.id.rollbutton)
+
+        resTxt = ""
+        binding.rollbutton.setOnClickListener { rollDices()
+            binding.result.text = ""
+            count--
+            if (count == 0){
+                Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
+                count = 3
+                binding.result.text = "du har slået: " + resTxt
+            }
+        }
+
 
         // Set a click listener on the button to roll the dice when the user taps the button
-        rollButton.setOnClickListener { rollDices() }
+       // get reference to ImageView
+        val clickTerning1 = binding.terning1 as ImageView
+        // set on-click listener
+        clickTerning1.setOnClickListener {
+            val diceImage: ImageView = findViewById(binding.terning1.id)
+            val drawableResource =  R.drawable.dice_1_last
+            diceImage.setImageResource(drawableResource)
 
+            // your code to perform when the user clicks on the ImageView
+            Toast.makeText(this@MainActivity, "You clicked on ImageViewterning1.", Toast.LENGTH_SHORT).show()
+        }
         // Do a dice roll when the app starts
         rollDices()
     }
 
     private fun rollDices() {
-        val diceImage1: ImageView = findViewById(R.id.terning1)
-        val dice1 = rollDice(diceImage1)
+        resTxt = "";
+        val diceImage1: ImageView = binding.terning1
+        resTxt = resTxt  + rollDice(diceImage1).toString()
 
-        val diceImage2: ImageView = findViewById(R.id.terning2)
-        val dice2 = rollDice(diceImage2)
+        val diceImage2: ImageView = binding.terning2
+        resTxt = resTxt  + ", " + rollDice(diceImage2)
 
-        val diceImage3: ImageView = findViewById(R.id.terning3)
-        val dice3 = rollDice(diceImage3)
+        val diceImage3: ImageView = binding.terning3
+        resTxt = resTxt  + ", " + rollDice(diceImage3)
 
-        val diceImage4: ImageView = findViewById(R.id.terning4)
-        val dice4 = rollDice(diceImage4)
+        val diceImage4: ImageView = binding.terning4
+        resTxt = resTxt  + ", " + rollDice(diceImage4)
 
-        val diceImage5: ImageView = findViewById(R.id.terning5)
-        val dice5 = rollDice(diceImage5)
+        val diceImage5: ImageView = binding.terning5
+        resTxt = resTxt  + ", " + rollDice(diceImage5)
     }
 
     /**
@@ -73,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         diceImage.contentDescription = diceRoll.toString()
         return diceRoll
     }
+
 }
 
 /**
@@ -86,4 +119,6 @@ class Dice(private val numSides: Int) {
     fun roll(): Int {
         return (1..numSides).random()
     }
+
+
 }

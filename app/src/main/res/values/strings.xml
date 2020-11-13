@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Yatzy</string>
     <string name="roll">Slå terningerne</string>
+    <string name="slaa">slå</string>
 </resources>
