@@ -1,51 +1,30 @@
+package com.example.diceroller
+
 import android.widget.ImageView
+import com.example.diceroller.Dice
 import com.example.diceroller.R
 
-object Yatzy {
-    fun rollDice(diceImage: ImageView): Int {
-        val dice = Dice(6)
-        val diceRoll = dice.roll()
-        // Determine which drawable resource ID to use based on the dice roll
-        val drawableResource = when (diceRoll) {
-            1 -> R.drawable.dice_1
-            2 -> R.drawable.dice_2
-            3 -> R.drawable.dice_3
-            4 -> R.drawable.dice_4
-            5 -> R.drawable.dice_5
-            else -> R.drawable.dice_6
-        }
+class Yatzy {
+    var enere = 0
+    var toere = 0
+    var treere = 0
+    var firere = 0
+    var femmere = 0
+    var seksere = 0
+    var bonus = 0
+    var etPar = 0
+    var toPar = 0
+    var treEns = 0
+    var fireEns = 0
+    var lille = 0
+    var stor = 0
+    var hus = 0
+    var chancen = 0
+    var yatsy = 0
 
-        // Update the ImageView with the correct drawable resource ID
-        diceImage.setImageResource(drawableResource)
+    fun calculateResult(t1: Dice, t2: Dice, t3: Dice, t4: Dice, t5: Dice) {
 
-        // Update the content description
-        diceImage.contentDescription = diceRoll.toString()
-        return diceRoll
-    }
 
-    fun clickListenerDice1(diceImage: ImageView, locked: Boolean): Boolean {
-        var newLocked = false;
-        var drawableResource = R.drawable.dice_1
-        if (locked){
-        } else{
-            drawableResource =  R.drawable.dice_1_last
-            newLocked = true
-        }
-        diceImage.setImageResource(drawableResource  )
-        return newLocked
-    }
-}
-
-/**
- * Dice with a fixed number of sides.
- */
-class Dice(private val numSides: Int) {
-
-    /**
-     * Do a random dice roll and return the result.
-     */
-    fun roll(): Int {
-        return (1..numSides).random()
     }
 
 

@@ -1,8 +1,6 @@
 package com.example.diceroller
 
-import Dice
-import android.os.Bundle
-import android.widget.Button
+import  android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,18 +12,16 @@ import com.example.diceroller.databinding.ActivityMainBinding
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var count = 3;
+    private var count = 1;
     private var resTxt = ""
-    private var antalOejne1 = 1
-    private var antalOejne2 = 1
-    private var antalOejne3 = 1
-    private var antalOejne4 = 1
-    private var antalOejne5 = 1
-    private var locked1 = false
-    private var locked2 = false
-    private var locked3 = false
-    private var locked4 = false
-    private var locked5 = false
+
+    private val t1 = Dice()
+    private val t2 = Dice()
+    private val t3 = Dice()
+    private val t4 = Dice()
+    private val t5 = Dice()
+    private val yatzy = Yatzy()
+
 
     /**
      * This method is called when the Activity is created.
@@ -34,97 +30,83 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         // Find the Button in the layout
-        val rollButton: Button = findViewById(R.id.rollbutton)
-
+        //val rollButton: Button = findViewById(R.id.rollbutton)
+        binding.result.text = "slå slag nr " + count
         resTxt = ""
-        binding.rollbutton.setOnClickListener { rollDices()
-            binding.result.text = ""
-            count--
-            if (count == 0){
-                Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
-                count = 3
-                binding.result.text = "du har slået: " + resTxt
-            }
+        binding.rollbutton.setOnClickListener {
+            rollButtonClicked()
         }
 
 
+        binding.stopbutton.setOnClickListener {
+            stopButtonClicked()
+        }
         // Set a click listener on the button to roll the dice when the user taps the button
        // get reference to ImageView
         val clickTerning1 = binding.terning1 as ImageView
         clickTerning1.setOnClickListener {
-            val diceImage: ImageView = findViewById(binding.terning1.id)
-            locked1 = Yatzy.clickListenerDice1(diceImage, locked1)
-        }
+            t1.lockUnlock(findViewById(binding.terning1.id))
+         }
 
         val clickTerning2 = binding.terning2 as ImageView
         clickTerning2.setOnClickListener {
-            val diceImage: ImageView = findViewById(binding.terning2.id)
-            locked2 = Yatzy.clickListenerDice1(diceImage, locked2)
+            t2.lockUnlock(findViewById(binding.terning2.id))
         }
 
         val clickTerning3 = binding.terning3 as ImageView
         clickTerning3.setOnClickListener {
-            val diceImage: ImageView = findViewById(binding.terning3.id)
-            locked3 = Yatzy.clickListenerDice1(diceImage, locked3)
+            t3.lockUnlock(findViewById(binding.terning3.id))
         }
-
         val clickTerning4 = binding.terning4 as ImageView
         clickTerning4.setOnClickListener {
-            val diceImage: ImageView = findViewById(binding.terning4.id)
-            locked4 = Yatzy.clickListenerDice1(diceImage, locked4)
+            t4.lockUnlock(findViewById(binding.terning4.id))
         }
-
         val clickTerning5 = binding.terning5 as ImageView
         clickTerning5.setOnClickListener {
-            val diceImage: ImageView = findViewById(binding.terning5.id)
-            locked5 = Yatzy.clickListenerDice1(diceImage, locked5)
+            t5.lockUnlock(findViewById(binding.terning5.id))
         }
         // Do a dice roll when the app starts
         rollDices()
     }
 
+    private fun stopButtonClicked() {
+        binding.result.text = "Du vil afbryde dine slag - er du sikker??\n"
+    }
+
+    private fun rollButtonClicked() {
+        rollDices()
+        binding.result.text = ""
+        count++
+        binding.result.text = "slå slag nr " + count
+        if (count > 3){
+            Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
+            count = 1
+            //Yatzy.calculateTesult(t1, t2, t3, t4, t5)
+            binding.result.text = "du har ikke flere slag \n" + "næste spiller - slå slag nr " + count
+            t1.unlock()
+            t2.unlock()
+            t3.unlock()
+            t4.unlock()
+            t5.unlock()
+        }
+    }
+
+
     private fun rollDices() {
-        resTxt = "";
-        if (!locked1) {
-            val diceImage1: ImageView = binding.terning1
-            antalOejne1 = rollDice(diceImage1)
-        }
-        if (!locked2) {
-            val diceImage2: ImageView = binding.terning2
-            antalOejne2 = rollDice(diceImage2)
-        }
-        if (!locked3) {
-            val diceImage3: ImageView = binding.terning3
-            antalOejne3 = rollDice(diceImage3)
-        }
-        if (!locked4) {
-            val diceImage4: ImageView = binding.terning4
-            antalOejne4 = rollDice(diceImage4)
-        }
-        if(!locked5){
-            val diceImage5: ImageView = binding.terning5
-            antalOejne5 = rollDice(diceImage5)
+        val diceImage1: ImageView = findViewById(R.id.terning1)
+        t1.roll(diceImage1)
+        val diceImage2: ImageView = findViewById(R.id.terning2)
+        t2.roll(diceImage2)
+        val diceImage3: ImageView = findViewById(R.id.terning3)
+        t3.roll(diceImage3)
+        val diceImage4: ImageView = findViewById(R.id.terning4)
+        t4.roll(diceImage4)
+        val diceImage5: ImageView = findViewById(R.id.terning5)
+        t5.roll(diceImage5)
         }
     }
 
-
-    /**
-     * Roll the dice and update the screen with the result.
-     */
-    private fun rollDice(diceImage: ImageView): Int {
-        // Find the ImageView in the layout
-        val diceImage: ImageView = findViewById(diceImage.id)
-        Yatzy.rollDice(diceImage)
-        val dice = Dice(6)
-        val diceRoll = dice.roll()
-        return diceRoll
-
-    }
-
-}
 
