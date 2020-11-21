@@ -41,7 +41,8 @@ class Dice() {
                 2 -> R.drawable.dice_2
                 3 -> R.drawable.dice_3
                 4 -> R.drawable.dice_4
-                else -> R.drawable.dice_5
+                5 -> R.drawable.dice_5
+                else -> R.drawable.dice_6
             }
         } else{
             drawableResource = when (dots) {
@@ -49,7 +50,8 @@ class Dice() {
                 2 -> R.drawable.dice_2_last
                 3 -> R.drawable.dice_3_last
                 4 -> R.drawable.dice_4_last
-                else -> R.drawable.dice_5_last
+                5 -> R.drawable.dice_5_last
+                else -> R.drawable.dice_6_last
             }
         }
         return drawableResource

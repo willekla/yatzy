@@ -1,10 +1,12 @@
 package com.example.diceroller
 
-import  android.os.Bundle
+import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.diceroller.databinding.ActivityMainBinding
+
 
 /**
  * This activity allows the user to roll a dice and view the result
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         // Find the Button in the layout
         //val rollButton: Button = findViewById(R.id.rollbutton)
-        binding.result.text = "slå slag nr " + count
+        binding.rollbutton.setText("slag nr " + count)
         resTxt = ""
         binding.rollbutton.setOnClickListener {
             rollButtonClicked()
@@ -80,17 +82,23 @@ class MainActivity : AppCompatActivity() {
         rollDices()
         binding.result.text = ""
         count++
-        binding.result.text = "slå slag nr " + count
+        binding.rollbutton.setText("slag nr " + count)
         if (count > 3){
             Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
             count = 1
-            //Yatzy.calculateTesult(t1, t2, t3, t4, t5)
-            binding.result.text = "du har ikke flere slag \n" + "næste spiller - slå slag nr " + count
+            yatzy.calculateResult(t1, t2, t3, t4, t5)
+            binding.rollbutton.setText("Ny spiller - slag nr " + count)
+            binding.message.removeAllViews()
+            val tv = TextView(this)
+            tv.text = yatzy.getResult()
+            binding.message.addView(tv)
+
             t1.unlock()
             t2.unlock()
             t3.unlock()
             t4.unlock()
             t5.unlock()
+            yatzy.reset()
         }
     }
 
