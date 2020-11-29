@@ -78,11 +78,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/roll"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:backgroundTint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499" />
@@ -92,18 +92,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/stop"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/playerButton"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toEndOf="@+id/rollbutton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/playerButton"
+        android:layout_width="120dp"
+        android:layout_height="47dp"
+        android:text="@string/opr_spillere"
+        android:textSize="12sp"
+        app:backgroundTint="#03A9F4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rollbutton"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/message"
-        android:layout_width="348dp"
-        android:layout_height="328dp"
+        android:layout_width="391dp"
+        android:layout_height="331dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.28"
+        app:layout_constraintHorizontal_bias="0.303"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">

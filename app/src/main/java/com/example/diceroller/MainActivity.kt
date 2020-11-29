@@ -1,5 +1,6 @@
 package com.example.diceroller
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
             rollButtonClicked()
         }
 
+        binding.playerButton.setOnClickListener {
+            playersButtonClicked()
+        }
 
         binding.stopbutton.setOnClickListener {
             stopButtonClicked()
@@ -76,7 +80,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun stopButtonClicked() {
         binding.result.text = "Du vil afbryde dine slag - er du sikker??\n"
+
     }
+
+    private fun playersButtonClicked() {
+        val intent = Intent(this, Players::class.java)
+        startActivity(intent);
+    }
+
 
     private fun rollButtonClicked() {
         rollDices()
@@ -99,6 +110,12 @@ class MainActivity : AppCompatActivity() {
             t4.unlock()
             t5.unlock()
             yatzy.reset()
+        }
+        else{
+            binding.message.removeAllViews()
+            val tv = TextView(this)
+            tv.text = ""
+            binding.message.addView(tv)
         }
     }
 

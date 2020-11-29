@@ -1,9 +1,5 @@
 package com.example.diceroller
 
-import android.widget.ImageView
-import com.example.diceroller.Dice
-import com.example.diceroller.R
-
 class Yatzy {
     val dots = IntArray(7)
     var enere = 0
@@ -77,7 +73,16 @@ class Yatzy {
 
     }
     fun getResult(): String {
-        var res = "Du har følgende muligheder:\n\nChancen: " + getChancen().toString()
+        var res = "Du har følgende muligheder:\n"
+
+        for (dot in 1..6){
+            var antal = onesToSix(dot)
+            if (antal > 0) {
+                res = res + "\nAntal " + dot + "'ere: " + antal + " - sum: " + antal * dot
+            }
+        }
+
+        var chancen = "\nChancen: " + getChancen().toString()
         if (getTreFireFem() > 0){
             if (getTreFireFem() > 3) {
                 res = res + "\n" + "3 ens - sum: " + 3 * getSum() / getTreFireFem()
@@ -92,9 +97,12 @@ class Yatzy {
                 res = res + "\n" + "3 ens - sum: " + getSum()
             }
         }
-        return res
+        return res+chancen
     }
 
+    private fun onesToSix(dot: Int): Int {
+       return dots[dot]
+    }
     private fun calcChancen(): Int {
         for (dot in 1..6){
             chancen= chancen + (dots[dot])*dot
