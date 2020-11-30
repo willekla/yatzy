@@ -13,8 +13,8 @@ class Yatzy {
     var toPar = 0
     var treEns = 0
     var fireEns = 0
-    var lille = 0
-    var stor = 0
+    private var lille = 0
+    private var stor = 0
     var hus = 0
     private var chancen = 0
     private var sum = 0
@@ -45,9 +45,7 @@ class Yatzy {
         dots[t5.getDots()]++
 
         chancen = calcChancen()
-        treFireFem =treFireFemEns()
-
-
+        treFireFem = treFireFemEns()
 
     }
 
@@ -67,6 +65,8 @@ class Yatzy {
     fun reset(){
         chancen = 0
         sum=0
+        isLille = false
+        isStor = false
         for (dot in 1..6){
             dots[dot] = 0
         }
@@ -97,7 +97,28 @@ class Yatzy {
                 res = res + "\n" + "3 ens - sum: " + getSum()
             }
         }
+
+        getlilleEllerStor()
+        if (isLille){
+            res = res + "\n" + "Lille - sum: 15"
+        }else if (isStor){
+            res = res + "\n" + "Stor - 20"
+        }
+
         return res+chancen
+    }
+
+    private fun getlilleEllerStor(){
+        for (dot in 2..5){
+            if (dots[dot] > 1){
+               return
+            }
+        }
+        if (dots[1] == 1){
+            isLille = true
+        } else{
+            isStor = true
+        }
     }
 
     private fun onesToSix(dot: Int): Int {

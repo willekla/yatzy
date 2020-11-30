@@ -27,7 +27,3 @@ class Players : AppCompatActivity() {
 
 }
 
-private fun Players.returnButtonClicked() {
-    val intent = Intent(this, Dispatchers.Main::class.java)
-    startActivity(intent)
-}
