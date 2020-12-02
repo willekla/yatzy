@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             binding.rollbutton.setText("Ny spiller - slag nr " + count)
             binding.message.removeAllViews()
             val tv = TextView(this)
-            tv.text = yatzy.getResult()
+            tv.text = yatzy.getResultAsText()
             binding.message.addView(tv)
 
             t1.unlock()

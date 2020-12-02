@@ -9,13 +9,13 @@ class Yatzy {
     var femmere = 0
     var seksere = 0
     var bonus = 0
-    var etPar = 0
-    var toPar = 0
+    private var etPar = 0
+    private var toPar = 0
     var treEns = 0
     var fireEns = 0
     private var lille = 0
     private var stor = 0
-    var hus = 0
+    private var hus = 0
     private var chancen = 0
     private var sum = 0
     private var treFireFem =0
@@ -27,13 +27,13 @@ class Yatzy {
     private var isFirere = false
     private var isFemmere = false
     var isSeksere = false
-    var isEtPar = false
-    var isToPar = false
+    private var isEtPar = false
+    private var isToPar = false
     var isTreEns = false
     var isFireEns = false
-    var isLille = false
-    var isStor = false
-    var isHus = false
+    private var isLille = false
+    private var isStor = false
+    private var isHus = false
     var iYatsy = false
 
 
@@ -67,12 +67,18 @@ class Yatzy {
         sum=0
         isLille = false
         isStor = false
+        isHus = false
+        hus = 0
+        isEtPar = false
+        etPar = 0
+        isToPar = false
+        toPar = 0
         for (dot in 1..6){
             dots[dot] = 0
         }
 
     }
-    fun getResult(): String {
+    fun getResultAsText(): String {
         var res = "Du har følgende muligheder:\n"
 
         for (dot in 1..6){
@@ -105,12 +111,55 @@ class Yatzy {
             res = res + "\n" + "Stor - 20"
         }
 
+        get1Par2par()
+        if (isEtPar){
+            res = res + "\n" + "Et par: " + etPar
+            if (isToPar) {
+                res = res + "\n" + "To par: " + toPar
+            }
+        }
+
+        getHus()
+        if (isHus){
+            res = res + "\n" + "Hus: " + hus
+        }
+
         return res+chancen
+    }
+
+    private fun getHus() {
+        for (dot in 1..6){
+            if (dots[dot] == 2){
+                for (dot1 in 1..6){
+                    if (dots[dot1] == 3){
+                        isHus = true
+                        hus = 2*dot + 3*dot1
+                        return
+                    }
+                }
+            }
+        }
+    }
+
+    private fun get1Par2par() {
+        for (dot in 6 downTo 1){
+            if (dots[dot] == 2){
+                isEtPar = true
+                etPar = 2*dot
+                for (dot1 in 6 downTo 1){
+                    if (dots[dot1] == 2 && dot1 != dot){
+                        isToPar = true
+                        toPar = 2*dot + 2*dot1
+                        return
+                    }
+                }
+            }
+        }
     }
 
     private fun getlilleEllerStor(){
         for (dot in 2..5){
-            if (dots[dot] > 1){
+            if (dots[dot] != 1 ){
                return
             }
         }
