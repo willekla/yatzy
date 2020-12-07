@@ -12,7 +12,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="opr_spillere">Opr. spillere</string>
+    <string name="opr_spillere">Opret spillere</string>
     <string name="tilbage_til_spillet">Tilbage til spillet</string>
     <string name="opret_spillere">Opret spillere</string>
+    <string name="spiller_navn">Tast navn</string>
 </resources>

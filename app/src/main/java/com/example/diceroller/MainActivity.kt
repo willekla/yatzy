@@ -1,11 +1,13 @@
 package com.example.diceroller
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.diceroller.com.example.diceroller.Player
 import com.example.diceroller.databinding.ActivityMainBinding
 
 
@@ -24,6 +26,9 @@ class MainActivity : AppCompatActivity() {
     private val t4 = Dice()
     private val t5 = Dice()
     private val yatzy = Yatzy()
+    private var player = Player()
+    private var listOfPlayers = arrayListOf<Player>()
+
 
 
     /**
@@ -37,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         // Find the Button in the layout
         //val rollButton: Button = findViewById(R.id.rollbutton)
-        binding.rollbutton.setText("slag nr " + count)
+        binding.rollbutton.setText(player.getName() + " slag nr " + count)
         resTxt = ""
         binding.rollbutton.setOnClickListener {
             rollButtonClicked()
@@ -85,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun playersButtonClicked() {
         val intent = Intent(this, Players::class.java)
-        startActivity(intent);
+        startActivityForResult(intent, 0)
     }
 
 
@@ -93,12 +98,12 @@ class MainActivity : AppCompatActivity() {
         rollDices()
         binding.result.text = ""
         count++
-        binding.rollbutton.setText("slag nr " + count)
+        binding.rollbutton.setText(player.getName() +" slag nr " + count)
         if (count > 3){
             Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
             count = 1
             yatzy.calculateResult(t1, t2, t3, t4, t5)
-            binding.rollbutton.setText("Ny spiller - slag nr " + count)
+            binding.rollbutton.setText(player.getName() + " slag nr " + count)
             binding.message.removeAllViews()
             val tv = TextView(this)
             tv.text = yatzy.getResultAsText()
@@ -119,6 +124,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // If you have multiple activities returning results then you should include unique request codes for each
+       if (requestCode == 0) {
+
+            // The result code from the activity started using startActivityForResults
+            if (resultCode == Activity.RESULT_OK) {
+                var dat = data?.extras
+                listOfPlayers = dat?.get("listOfPlayers") as ArrayList<Player>
+                if (listOfPlayers.isNotEmpty()) {
+                    player = listOfPlayers[0]
+                    binding.rollbutton.setText(player.getName() + " slag nr " + count)
+                }
+           }
+       }
+    }
 
     private fun rollDices() {
         val diceImage1: ImageView = findViewById(R.id.terning1)
