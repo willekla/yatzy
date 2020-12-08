@@ -29,14 +29,34 @@ class Players : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_players)
+        fillListOfPlayersFromMain(intent)
 
         //actionbar
         val actionbar = supportActionBar
         //set actionbar title
-        actionbar!!.title = "Tilbage til spillet"
-        //set back button
+        actionbar!!.title = "Tilbage til spillet"        //set back button
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun fillListOfPlayersFromMain(intent: Intent?) {
+        listOfPlayers = getIntent().getSerializableExtra("listOfPlayers") as ArrayList<Player>;
+        editText1 = findViewById(R.id.PersonName1)
+        editText2 = findViewById(R.id.PersonName2)
+        editText3 = findViewById(R.id.PersonName3)
+        editText4 = findViewById(R.id.PersonName4)
+        if (listOfPlayers.size> 0) {
+            editText1.setText(listOfPlayers[0].getName())
+        }
+        if (listOfPlayers.size> 1) {
+            editText2.setText(listOfPlayers[1].getName())
+        }
+        if (listOfPlayers.size> 2){
+            editText3.setText(listOfPlayers[2].getName())
+        }
+        if (listOfPlayers.size> 3) {
+            editText4.setText(listOfPlayers[3].getName())
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -49,6 +69,7 @@ class Players : AppCompatActivity() {
         personName2 = editText2.text.toString()
         personName3 = editText3.text.toString()
         personName4 = editText4.text.toString()
+        listOfPlayers = arrayListOf<Player>()
         if (!personName1.isBlank()) {
             player1.setName(personName1)
             listOfPlayers.add(player1)
@@ -58,7 +79,7 @@ class Players : AppCompatActivity() {
             listOfPlayers.add(player2)
         }
         if (!personName3.isBlank()) {
-            player3.setName((personName2))
+            player3.setName((personName3))
             listOfPlayers.add(player3)
         }
         if (!personName4.isBlank()) {

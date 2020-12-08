@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun playersButtonClicked() {
         val intent = Intent(this, Players::class.java)
+        intent.putExtra("listOfPlayers", listOfPlayers);
         startActivityForResult(intent, 0)
     }
 
