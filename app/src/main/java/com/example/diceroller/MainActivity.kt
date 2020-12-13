@@ -1,14 +1,11 @@
 package com.example.diceroller
 
-import android.app.ActionBar
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Point
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.diceroller.com.example.diceroller.Player
 import com.example.diceroller.databinding.ActivityMainBinding
@@ -137,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (player != null){
                     player.setChoice(radio.text)
-                    createButtonDynamically()
+                    createButtonDynamically(radio.text)
                 }
             }
 
@@ -188,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         t5.roll(diceImage5)
     }
 
-    private fun createButtonDynamically() {
+    private fun createButtonDynamically(text: CharSequence) {
         // creating the button
         val dynamicButton = Button(this)
         // setting layout_width and layout_height using layout parameters
@@ -196,26 +193,23 @@ class MainActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        val params = RelativeLayout.LayoutParams(80, 80) // size of button in dp
+
         dynamicButton.text = "er dette dit valg??"
         dynamicButton.setBackgroundColor(Color.GREEN)
 
 
         dynamicButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Hello GEEK", Toast.LENGTH_LONG).show()
             binding.root.removeView(dynamicButton)
             binding.message.removeAllViews()
+            binding.linearLayout.removeAllViews()
+            listOfPlayers[0].setChoice(text)
         }
 
-        val lp = RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-            addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-            addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-        }
 
-        binding.root.addView(dynamicButton, lp)
+
+        //binding.linearLayout.addView(dynamicButton, lp)
         // add Button to LinearLayout
-       // binding.root.addView(dynamicButton)
+       binding.linearLayout.addView(dynamicButton)
 
 
 
