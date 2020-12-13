@@ -2,7 +2,7 @@ package com.example.diceroller.com.example.diceroller
 
 import android.widget.EditText
 
-class Player : java.io.Serializable{
+class Player : java.io.Serializable {
     private var name = ""
     private var enere = 0
     private var toere = 0
@@ -27,7 +27,7 @@ class Player : java.io.Serializable{
         return name
     }
 
-    fun setName(name:String){
+    fun setName(name: String) {
         this.name = name
     }
 
@@ -35,7 +35,7 @@ class Player : java.io.Serializable{
         return enere
     }
 
-    fun setEnere(value:Int){
+    fun setEnere(value: Int) {
         this.enere = value
     }
 
@@ -43,7 +43,7 @@ class Player : java.io.Serializable{
         return toere
     }
 
-    fun setToere(value:Int){
+    fun setToere(value: Int) {
         this.toere = value
     }
 
@@ -51,7 +51,7 @@ class Player : java.io.Serializable{
         return treere
     }
 
-    fun setTreere(value:Int){
+    fun setTreere(value: Int) {
         this.treere = value
     }
 
@@ -59,14 +59,15 @@ class Player : java.io.Serializable{
         return firere
     }
 
-    fun setFirere(value:Int){
+    fun setFirere(value: Int) {
         this.firere = value
     }
+
     fun getFemmere(): Int {
         return femmere
     }
 
-    fun setFemmere(value:Int){
+    fun setFemmere(value: Int) {
         this.femmere = value
     }
 
@@ -74,7 +75,7 @@ class Player : java.io.Serializable{
         return seksere
     }
 
-    fun setSeksere(value:Int){
+    fun setSeksere(value: Int) {
         this.seksere = value
     }
 
@@ -82,7 +83,7 @@ class Player : java.io.Serializable{
         return etPar
     }
 
-    fun setToPar(value:Int){
+    fun setToPar(value: Int) {
         this.toPar = value
     }
 
@@ -90,14 +91,15 @@ class Player : java.io.Serializable{
         return treEns
     }
 
-    fun setTreEns(value:Int){
+    fun setTreEns(value: Int) {
         this.treEns = value
     }
+
     fun getFireEns(): Int {
         return fireEns
     }
 
-    fun setFireEns(value:Int){
+    fun setFireEns(value: Int) {
         this.fireEns = value
     }
 
@@ -105,7 +107,7 @@ class Player : java.io.Serializable{
         return lille
     }
 
-    fun setLille(value:Int){
+    fun setLille(value: Int) {
         this.lille = value
     }
 
@@ -113,7 +115,7 @@ class Player : java.io.Serializable{
         return stor
     }
 
-    fun setStor(value:Int){
+    fun setStor(value: Int) {
         this.stor = value
     }
 
@@ -121,7 +123,7 @@ class Player : java.io.Serializable{
         return hus
     }
 
-    fun setHus(value:Int){
+    fun setHus(value: Int) {
         this.hus = value
     }
 
@@ -129,14 +131,15 @@ class Player : java.io.Serializable{
         return chancen
     }
 
-    fun setChancen(value:Int){
+    fun setChancen(value: Int) {
         this.chancen = value
     }
+
     fun getYatzy(): Int {
         return yatsy
     }
 
-    fun setYatzy(value:Int){
+    fun setYatzy(value: Int) {
         this.yatsy = value
     }
 
@@ -146,6 +149,13 @@ class Player : java.io.Serializable{
 
     fun getSum(): Int {
         return sum
+    }
+
+    fun setValgt() {
+    }
+
+    fun setChoice(value: CharSequence) {
+
     }
 
 

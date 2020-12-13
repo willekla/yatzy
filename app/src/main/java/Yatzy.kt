@@ -191,4 +191,54 @@ class Yatzy {
         return 0
     }
 
+    fun getResultAsArray(): ArrayList<String> {
+        var pos = ArrayList<String>()
+
+        for (dot in 1..6){
+            var antal = onesToSix(dot)
+            if (antal > 0) {
+               pos.add("\nAntal " + dot + "'ere: " + antal + " - sum: " + antal * dot)
+            }
+        }
+
+        if (getTreFireFem() > 0){
+            var res = ""
+            if (getTreFireFem() > 3) {
+                pos.add("3 ens - sum: " + 3 * getSum() / getTreFireFem())
+
+                if (getTreFireFem() > 4) {
+                    pos.add("4 ens - sum: " + 4 * getSum() / getTreFireFem())
+                    pos.add("Yatzy - sum: " + getSum())
+                }else {
+                    pos.add("4 ens - sum: " + 4 * getSum() / getTreFireFem())
+                }
+            }else {
+                pos.add("3 ens - sum: " + getSum())
+            }
+        }
+
+        getlilleEllerStor()
+        if (isLille){
+            pos.add("Lille - sum: 15")
+        }else if (isStor){
+            pos.add("Stor - 20")
+        }
+
+        get1Par2par()
+        if (isEtPar){
+            pos.add("Et par: " + etPar)
+            if (isToPar) {
+                pos.add("To par: " + toPar)
+            }
+        }
+
+        getHus()
+        if (isHus){
+           pos.add("Hus: " + hus)
+        }
+
+        pos.add("Chancen: " + getChancen().toString())
+        return pos
+    }
+
 }

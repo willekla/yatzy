@@ -1,11 +1,14 @@
 package com.example.diceroller
 
+import android.app.ActionBar
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Point
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.diceroller.com.example.diceroller.Player
 import com.example.diceroller.databinding.ActivityMainBinding
@@ -17,6 +20,7 @@ import com.example.diceroller.databinding.ActivityMainBinding
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var radioGroup: RadioGroup
     private var count = 1;
     private var resTxt = ""
 
@@ -28,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     private val yatzy = Yatzy()
     private var player = Player()
     private var listOfPlayers = arrayListOf<Player>()
-
 
 
     /**
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         //val rollButton: Button = findViewById(R.id.rollbutton)
         binding.rollbutton.setText(player.getName() + " slag nr " + count)
         resTxt = ""
+
         binding.rollbutton.setOnClickListener {
             rollButtonClicked()
         }
@@ -56,11 +60,11 @@ class MainActivity : AppCompatActivity() {
             stopButtonClicked()
         }
         // Set a click listener on the button to roll the dice when the user taps the button
-       // get reference to ImageView
+        // get reference to ImageView
         val clickTerning1 = binding.terning1 as ImageView
         clickTerning1.setOnClickListener {
             t1.lockUnlock(findViewById(binding.terning1.id))
-         }
+        }
 
         val clickTerning2 = binding.terning2 as ImageView
         clickTerning2.setOnClickListener {
@@ -99,8 +103,8 @@ class MainActivity : AppCompatActivity() {
         rollDices()
         binding.result.text = ""
         count++
-        binding.rollbutton.setText(player.getName() +" slag nr " + count)
-        if (count > 3){
+        binding.rollbutton.setText(player.getName() + " slag nr " + count)
+        if (count > 3) {
             Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
             count = 1
             yatzy.calculateResult(t1, t2, t3, t4, t5)
@@ -108,16 +112,43 @@ class MainActivity : AppCompatActivity() {
             binding.message.removeAllViews()
             val tv = TextView(this)
             tv.text = yatzy.getResultAsText()
-            binding.message.addView(tv)
 
+            radioGroup = RadioGroup(this)
+            val options = yatzy.getResultAsArray()
+            for (i in options.indices) {
+                // create a radio button
+                val rb = RadioButton(this)
+                // set text for the radio button
+                rb.text = options[i]
+                // assign an automatically generated id to the radio button
+                rb.id = View.generateViewId()
+                // add radio button to the radio group
+                radioGroup.addView(rb)
+
+                // Get radio group selected item using on checked change listener
+
+            }
+
+            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                val radio: RadioButton = findViewById(checkedId)
+                Toast.makeText(applicationContext, " On checked change :" +
+                        " ${radio.text}  ",
+                        Toast.LENGTH_LONG).show()
+
+                if (player != null){
+                    player.setChoice(radio.text)
+                    createButtonDynamically()
+                }
+            }
+
+            binding.message.addView(radioGroup)
             t1.unlock()
             t2.unlock()
             t3.unlock()
             t4.unlock()
             t5.unlock()
             yatzy.reset()
-        }
-        else{
+        } else {
             binding.message.removeAllViews()
             val tv = TextView(this)
             tv.text = ""
@@ -125,11 +156,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // If you have multiple activities returning results then you should include unique request codes for each
-       if (requestCode == 0) {
+        if (requestCode == 0) {
 
             // The result code from the activity started using startActivityForResults
             if (resultCode == Activity.RESULT_OK) {
@@ -139,8 +171,8 @@ class MainActivity : AppCompatActivity() {
                     player = listOfPlayers[0]
                     binding.rollbutton.setText(player.getName() + " slag nr " + count)
                 }
-           }
-       }
+            }
+        }
     }
 
     private fun rollDices() {
@@ -154,7 +186,40 @@ class MainActivity : AppCompatActivity() {
         t4.roll(diceImage4)
         val diceImage5: ImageView = findViewById(R.id.terning5)
         t5.roll(diceImage5)
-        }
     }
+
+    private fun createButtonDynamically() {
+        // creating the button
+        val dynamicButton = Button(this)
+        // setting layout_width and layout_height using layout parameters
+        dynamicButton.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        val params = RelativeLayout.LayoutParams(80, 80) // size of button in dp
+        dynamicButton.text = "er dette dit valg??"
+        dynamicButton.setBackgroundColor(Color.GREEN)
+
+
+        dynamicButton.setOnClickListener {
+            Toast.makeText(this@MainActivity, "Hello GEEK", Toast.LENGTH_LONG).show()
+            binding.root.removeView(dynamicButton)
+            binding.message.removeAllViews()
+        }
+
+        val lp = RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+            addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+            addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+        }
+
+        binding.root.addView(dynamicButton, lp)
+        // add Button to LinearLayout
+       // binding.root.addView(dynamicButton)
+
+
+
+    }
+}
 
 
