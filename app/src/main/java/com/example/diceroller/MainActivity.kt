@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val yatzy = Yatzy()
     private var player = Player()
     private var listOfPlayers = arrayListOf<Player>()
+    private var currentPlayer = 0
 
 
     /**
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         // Find the Button in the layout
         //val rollButton: Button = findViewById(R.id.rollbutton)
-        binding.rollbutton.setText(player.getName()+ getString(R.string.slag_nr) +  count)
+        setTextOnRollbutton(player, count)
         resTxt = ""
 
         binding.rollbutton.setOnClickListener {
@@ -89,23 +90,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun playersButtonClicked() {
-        val intent = Intent(this, Players::class.java)
-        intent.putExtra("listOfPlayers", listOfPlayers);
-        startActivityForResult(intent, 0)
-    }
 
 
     private fun rollButtonClicked() {
         rollDices()
         binding.result.text = ""
         count++
-        binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
+        setTextOnRollbutton(player, count)
         if (count > 3) {
             Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
             count = 1
             yatzy.calculateResult(t1, t2, t3, t4, t5)
-            binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
+
             binding.message.removeAllViews()
             val tv = TextView(this)
             tv.text = yatzy.getResultAsText()
@@ -135,7 +131,15 @@ class MainActivity : AppCompatActivity() {
                 if (player != null){
                     player.setChoice(radio.text)
                     createConfirmButton(radio.text)
+
+                    currentPlayer++
+                    if (currentPlayer >= listOfPlayers.size){
+                        currentPlayer = 0
+                    }
+                    player = listOfPlayers[currentPlayer]
                 }
+                //setTextOnRollbutton(player, count)
+
             }
 
             binding.message.addView(radioGroup)
@@ -153,6 +157,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setTextOnRollbutton(player: Player, count: Int) {
+        if (count < 4) {
+            binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
+        } else{
+            binding.rollbutton.setText("ikke flere slag")
+        }
+
+    }
+
+    // ---- create players
+    private fun playersButtonClicked() {
+        val intent = Intent(this, Players::class.java)
+        intent.putExtra("listOfPlayers", listOfPlayers);
+        startActivityForResult(intent, 0)
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -163,14 +182,16 @@ class MainActivity : AppCompatActivity() {
             // The result code from the activity started using startActivityForResults
             if (resultCode == Activity.RESULT_OK) {
                 var dat = data?.extras
-                listOfPlayers = (dat?.get("listOfPlayers") as ArrayList<Player>)
+                listOfPlayers = dat?.get("listOfPlayers") as ArrayList<Player>
                 if (listOfPlayers.isNotEmpty()) {
                     player = listOfPlayers[0]
-                    binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
+                    currentPlayer = 0
+                    setTextOnRollbutton(player, count)
                 }
             }
         }
     }
+    // ---- create players end
 
     private fun rollDices() {
         val diceImage1: ImageView = findViewById(R.id.terning1)
@@ -202,7 +223,8 @@ class MainActivity : AppCompatActivity() {
             binding.message.removeAllViews()
             binding.linearLayout.removeAllViews()
             if (!listOfPlayers.isEmpty()) {
-                listOfPlayers[0].setChoice(text)
+                listOfPlayers[currentPlayer].setChoice(text)
+                setTextOnRollbutton(player, count)
             }
         }
         // add Button to LinearLayout

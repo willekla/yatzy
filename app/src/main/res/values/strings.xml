@@ -17,5 +17,5 @@
     <string name="opret_spillere">Opret spillere</string>
     <string name="spiller_navn">Tast navn</string>
     <string name="ok_valg">er dette dit valg??</string>
-    <string name="slag_nr"> slag nr </string>
+    <string name="slag_nr">\u0020slag nr\u0020</string>
 </resources>
