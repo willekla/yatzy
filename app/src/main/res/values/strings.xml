@@ -16,4 +16,6 @@
     <string name="tilbage_til_spillet">Tilbage til spillet</string>
     <string name="opret_spillere">Opret spillere</string>
     <string name="spiller_navn">Tast navn</string>
+    <string name="ok_valg">er dette dit valg??</string>
+    <string name="slag_nr"> slag nr </string>
 </resources>

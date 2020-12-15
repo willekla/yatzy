@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         // Find the Button in the layout
         //val rollButton: Button = findViewById(R.id.rollbutton)
-        binding.rollbutton.setText(player.getName() + " slag nr " + count)
+        binding.rollbutton.setText(player.getName()+ getString(R.string.slag_nr) +  count)
         resTxt = ""
 
         binding.rollbutton.setOnClickListener {
@@ -100,12 +100,12 @@ class MainActivity : AppCompatActivity() {
         rollDices()
         binding.result.text = ""
         count++
-        binding.rollbutton.setText(player.getName() + " slag nr " + count)
+        binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
         if (count > 3) {
             Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
             count = 1
             yatzy.calculateResult(t1, t2, t3, t4, t5)
-            binding.rollbutton.setText(player.getName() + " slag nr " + count)
+            binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
             binding.message.removeAllViews()
             val tv = TextView(this)
             tv.text = yatzy.getResultAsText()
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (player != null){
                     player.setChoice(radio.text)
-                    createButtonDynamically(radio.text)
+                    createConfirmButton(radio.text)
                 }
             }
 
@@ -163,10 +163,10 @@ class MainActivity : AppCompatActivity() {
             // The result code from the activity started using startActivityForResults
             if (resultCode == Activity.RESULT_OK) {
                 var dat = data?.extras
-                listOfPlayers = dat?.get("listOfPlayers") as ArrayList<Player>
+                listOfPlayers = (dat?.get("listOfPlayers") as ArrayList<Player>)
                 if (listOfPlayers.isNotEmpty()) {
                     player = listOfPlayers[0]
-                    binding.rollbutton.setText(player.getName() + " slag nr " + count)
+                    binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
                 }
             }
         }
@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         t5.roll(diceImage5)
     }
 
-    private fun createButtonDynamically(text: CharSequence) {
+    private fun createConfirmButton(text: CharSequence) {
         // creating the button
         val dynamicButton = Button(this)
         // setting layout_width and layout_height using layout parameters
@@ -194,25 +194,19 @@ class MainActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        dynamicButton.text = "er dette dit valg??"
+        dynamicButton.text = getString(R.string.ok_valg)
         dynamicButton.setBackgroundColor(Color.GREEN)
-
 
         dynamicButton.setOnClickListener {
             binding.root.removeView(dynamicButton)
             binding.message.removeAllViews()
             binding.linearLayout.removeAllViews()
-            listOfPlayers[0].setChoice(text)
+            if (!listOfPlayers.isEmpty()) {
+                listOfPlayers[0].setChoice(text)
+            }
         }
-
-
-
-        //binding.linearLayout.addView(dynamicButton, lp)
         // add Button to LinearLayout
        binding.linearLayout.addView(dynamicButton)
-
-
-
     }
 }
 
