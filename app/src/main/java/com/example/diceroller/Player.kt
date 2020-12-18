@@ -155,7 +155,7 @@ class Player : java.io.Serializable {
     }
 
     fun setChoice(value: CharSequence) {
-
+        println(value)
     }
 
 

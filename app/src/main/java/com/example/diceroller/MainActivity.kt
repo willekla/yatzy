@@ -18,7 +18,7 @@ import com.example.diceroller.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var radioGroup: RadioGroup
-    private var count = 1;
+    private var count = 1
     private var resTxt = ""
 
     private val t1 = Dice()
@@ -59,25 +59,25 @@ class MainActivity : AppCompatActivity() {
         }
         // Set a click listener on the button to roll the dice when the user taps the button
         // get reference to ImageView
-        val clickTerning1 = binding.terning1 as ImageView
+        val clickTerning1 = binding.terning1
         clickTerning1.setOnClickListener {
             t1.lockUnlock(findViewById(binding.terning1.id))
         }
 
-        val clickTerning2 = binding.terning2 as ImageView
+        val clickTerning2 = binding.terning2
         clickTerning2.setOnClickListener {
             t2.lockUnlock(findViewById(binding.terning2.id))
         }
 
-        val clickTerning3 = binding.terning3 as ImageView
+        val clickTerning3 = binding.terning3
         clickTerning3.setOnClickListener {
             t3.lockUnlock(findViewById(binding.terning3.id))
         }
-        val clickTerning4 = binding.terning4 as ImageView
+        val clickTerning4 = binding.terning4
         clickTerning4.setOnClickListener {
             t4.lockUnlock(findViewById(binding.terning4.id))
         }
-        val clickTerning5 = binding.terning5 as ImageView
+        val clickTerning5 = binding.terning5
         clickTerning5.setOnClickListener {
             t5.lockUnlock(findViewById(binding.terning5.id))
         }
@@ -87,9 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun stopButtonClicked() {
         binding.result.text = "Du vil afbryde dine slag - er du sikker??\n"
-
     }
-
 
 
     private fun rollButtonClicked() {
@@ -101,75 +99,73 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Du har ikke flere slag", Toast.LENGTH_SHORT).show()
             count = 1
             yatzy.calculateResult(t1, t2, t3, t4, t5)
+            if (listOfPlayers.isNotEmpty()) {
+                binding.message.removeAllViews()
+                val tv = TextView(this)
+                tv.text = yatzy.getResultAsText()
 
-            binding.message.removeAllViews()
-            val tv = TextView(this)
-            tv.text = yatzy.getResultAsText()
+                radioGroup = RadioGroup(this)
+                val options = yatzy.getResultAsArray()
+                for (i in options.indices) {
+                    // create a radio button
+                    val rb = RadioButton(this)
+                    // set text for the radio button
+                    rb.text = options[i]
+                    // assign an automatically generated id to the radio button
+                    rb.id = View.generateViewId()
+                    // add radio button to the radio group
+                    radioGroup.addView(rb)
 
-            radioGroup = RadioGroup(this)
-            val options = yatzy.getResultAsArray()
-            for (i in options.indices) {
-                // create a radio button
-                val rb = RadioButton(this)
-                // set text for the radio button
-                rb.text = options[i]
-                // assign an automatically generated id to the radio button
-                rb.id = View.generateViewId()
-                // add radio button to the radio group
-                radioGroup.addView(rb)
+                    // Get radio group selected item using on checked change listener
 
-                // Get radio group selected item using on checked change listener
+                }
 
-            }
+                radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                    val radio: RadioButton = findViewById(checkedId)
+                    Toast.makeText(applicationContext, " On checked change :" +
+                            " ${radio.text}  ",
+                            Toast.LENGTH_LONG).show()
 
-            radioGroup.setOnCheckedChangeListener { group, checkedId ->
-                val radio: RadioButton = findViewById(checkedId)
-                Toast.makeText(applicationContext, " On checked change :" +
-                        " ${radio.text}  ",
-                        Toast.LENGTH_LONG).show()
 
-                if (player != null){
                     player.setChoice(radio.text)
                     createConfirmButton(radio.text)
 
                     currentPlayer++
-                    if (currentPlayer >= listOfPlayers.size){
+                    if (currentPlayer >= listOfPlayers.size) {
                         currentPlayer = 0
                     }
                     player = listOfPlayers[currentPlayer]
                 }
-                //setTextOnRollbutton(player, count)
+                binding.message.addView(radioGroup)
 
+            } else {
+                binding.message.removeAllViews()
+                val tv = TextView(this)
+                tv.text = ""
+                binding.message.addView(tv)
             }
-
-            binding.message.addView(radioGroup)
             t1.unlock()
             t2.unlock()
             t3.unlock()
             t4.unlock()
             t5.unlock()
             yatzy.reset()
-        } else {
-            binding.message.removeAllViews()
-            val tv = TextView(this)
-            tv.text = ""
-            binding.message.addView(tv)
         }
     }
 
     private fun setTextOnRollbutton(player: Player, count: Int) {
-        if (count < 4) {
-            binding.rollbutton.setText(player.getName() + getString(R.string.slag_nr) + count)
-        } else{
-            binding.rollbutton.setText("ikke flere slag")
+        val txt = player.getName() + getString(R.string.slag_nr) + count
+        if (count < 4 ) {
+            binding.rollbutton.setText(txt)
+        } else {
+            binding.rollbutton.setText(getString(R.string.no_more_moves))
         }
-
     }
 
     // ---- create players
     private fun playersButtonClicked() {
         val intent = Intent(this, Players::class.java)
-        intent.putExtra("listOfPlayers", listOfPlayers);
+        intent.putExtra("listOfPlayers", listOfPlayers)
         startActivityForResult(intent, 0)
     }
 
@@ -180,8 +176,9 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 0) {
 
             // The result code from the activity started using startActivityForResults
+            @Suppress("UNCHECKED_CAST")
             if (resultCode == Activity.RESULT_OK) {
-                var dat = data?.extras
+                val dat = data?.extras
                 listOfPlayers = dat?.get("listOfPlayers") as ArrayList<Player>
                 if (listOfPlayers.isNotEmpty()) {
                     player = listOfPlayers[0]
@@ -228,7 +225,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         // add Button to LinearLayout
-       binding.linearLayout.addView(dynamicButton)
+        binding.linearLayout.addView(dynamicButton)
     }
 }
 

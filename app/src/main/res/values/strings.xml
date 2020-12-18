@@ -4,18 +4,13 @@
     <string name="slaa">slå</string>
     <string name="stop">stop</string>
     <string name="title_activity_player">Player</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="opr_spillere">Opret spillere</string>
     <string name="tilbage_til_spillet">Tilbage til spillet</string>
     <string name="opret_spillere">Opret spillere</string>
     <string name="spiller_navn">Tast navn</string>
     <string name="ok_valg">er dette dit valg??</string>
     <string name="slag_nr">\u0020slag nr\u0020</string>
+    <string name="no_more_moves">ikke flere slag</string>
+
+    <string name="Chancen">Chancen:</string>
 </resources>

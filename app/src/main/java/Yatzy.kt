@@ -1,5 +1,7 @@
 package com.example.diceroller
 
+import android.provider.Settings.Global.getString
+
 class Yatzy {
     val dots = IntArray(7)
     var enere = 0
