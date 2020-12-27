@@ -1,16 +1,26 @@
 <resources>
     <string name="app_name">Yatzy</string>
     <string name="roll">Slå terningerne</string>
-    <string name="slaa">slå</string>
+    <string name="hit">slå</string>
     <string name="stop">stop</string>
     <string name="title_activity_player">Player</string>
-    <string name="opr_spillere">Opret spillere</string>
-    <string name="tilbage_til_spillet">Tilbage til spillet</string>
-    <string name="opret_spillere">Opret spillere</string>
-    <string name="spiller_navn">Tast navn</string>
-    <string name="ok_valg">er dette dit valg??</string>
-    <string name="slag_nr">\u0020slag nr\u0020</string>
+    <string name="create_player">Opret spillere</string>
+    <string name="enter_name">Tast navn</string>
+    <string name="ok_choise">er dette dit valg??</string>
+    <string name="throw_number">\u0020slag nr\u0020</string>
     <string name="no_more_moves">ikke flere slag</string>
 
-    <string name="Chancen">Chancen:</string>
+    <string name="one_pair">Et par</string>
+    <string name="antal">Antal</string>
+    <string name="two_pair">To par</string>
+    <string name="three_equals">3 ens</string>
+    <string name="back_to_game">Tilbage til spillet</string>
+    <string name="four_equals">4 ens</string>
+    <string name="small">Lille</string>
+    <string name="great">Stor</string>
+    <string name="house">hus</string>
+    <string name="yatzy">Yatzy</string>
+    <string name="chance">Chancen</string>
+    <string name="sum">sum</string>
+    <string name="possibilities">Du har følgende muligheder:</string>
 </resources>

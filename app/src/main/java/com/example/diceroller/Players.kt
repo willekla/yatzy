@@ -17,14 +17,14 @@ class Players : AppCompatActivity() {
     private val player2= Player()
     private val player3 = Player()
     private val player4= Player()
-    lateinit var editText1: EditText
-    lateinit var editText2: EditText
-    lateinit var editText3: EditText
-    lateinit var editText4: EditText
-    lateinit var personName1: String
-    lateinit var personName2: String
-    lateinit var personName3: String
-    lateinit var personName4: String
+    private lateinit var editText1: EditText
+    private lateinit var editText2: EditText
+    private lateinit var editText3: EditText
+    private lateinit var editText4: EditText
+    private lateinit var personName1: String
+    private lateinit var personName2: String
+    private lateinit var personName3: String
+    private lateinit var personName4: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class Players : AppCompatActivity() {
         //actionbar
         val actionbar = supportActionBar
         //set actionbar title
-        actionbar!!.title = "Tilbage til spillet"        //set back button
+        actionbar!!.title = getString(R.string.back_to_game)        //set back button
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setDisplayHomeAsUpEnabled(true)
     }

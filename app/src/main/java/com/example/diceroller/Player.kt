@@ -158,5 +158,9 @@ class Player : java.io.Serializable {
         println(value)
     }
 
+    fun setScore(score: Any) {
+
+    }
+
 
 }

@@ -103,7 +103,7 @@
         android:id="@+id/playerButton"
         android:layout_width="120dp"
         android:layout_height="47dp"
-        android:text="@string/opr_spillere"
+        android:text="@string/create_player"
         android:textSize="12sp"
         app:backgroundTint="#03A9F4"
         app:layout_constraintBottom_toBottomOf="parent"

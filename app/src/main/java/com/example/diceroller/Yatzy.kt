@@ -1,8 +1,13 @@
-package com.example.diceroller
+package com.example.diceroller.com.example.diceroller
 
-import android.provider.Settings.Global.getString
+import android.content.Context
+import android.content.res.Resources
+import com.example.diceroller.Dice
+import com.example.diceroller.R
+import java.util.*
+import kotlin.collections.ArrayList
 
-class Yatzy {
+class Yatzy() {
     val dots = IntArray(7)
     var enere = 0
     var toere = 0
@@ -38,7 +43,6 @@ class Yatzy {
     private var isHus = false
     var iYatsy = false
 
-
     fun calculateResult(t1: Dice, t2: Dice, t3: Dice, t4: Dice, t5: Dice) {
         dots[t1.getDots()]++
         dots[t2.getDots()]++
@@ -68,7 +72,9 @@ class Yatzy {
         chancen = 0
         sum=0
         isLille = false
+        lille = 0
         isStor = false
+        stor = 0
         isHus = false
         hus = 0
         isEtPar = false
@@ -80,8 +86,8 @@ class Yatzy {
         }
 
     }
-    fun getResultAsText(): String {
-        var res = "Du har følgende muligheder:\n"
+    fun getResultAsText(context: Context): String {
+        var res = context.resources.getString(R.string.possibilities) + "\n"
 
         for (dot in 1..6){
             var antal = onesToSix(dot)
@@ -239,8 +245,65 @@ class Yatzy {
            pos.add("Hus: " + hus)
         }
 
-        pos.add("Chancen: " + getChancen().toString())
+        pos.add("Chancen" + ": " + getChancen().toString())
         return pos
+    }
+
+    fun getScore(context: Context, text: CharSequence): Pair<String, Int> {
+
+        val cAntal = context.resources.getString(R.string.antal)
+        val cOnPair = context.resources.getString(R.string.one_pair)
+        val cTwoPair = context.resources.getString(R.string.two_pair)
+        val cEquals3 = context.resources.getString(R.string.three_equals)
+        val cEquals4 = context.resources.getString(R.string.four_equals)
+        val cSmall = context.resources.getString(R.string.small)
+        val cGreat = context.resources.getString(R.string.great)
+        val cHouse = context.resources.getString(R.string.house)
+        val cYatzy = context.resources.getString(R.string.yatzy)
+        val cChance = context.resources.getString(R.string.chance)
+        val cSum = context.resources.getString(R.string.sum)
+        var score = Pair("x", 1)
+
+        if (text != null) {
+            val x = text.findAnyOf(
+                listOf(
+                    cAntal,
+                    cOnPair,
+                    cTwoPair,
+                    cEquals3,
+                    cEquals4,
+                    cSmall,
+                    cGreat,
+                    cHouse,
+                    cYatzy,
+                    cChance
+                ), 0, true
+            )
+            if (x != null) {
+                when (x.second) {
+                    cAntal -> score =  getResultOfonesToSix(text)
+                    cOnPair -> print("et par")
+                    cTwoPair -> print("2 par")
+                    cEquals3 -> print("3 ens")
+                    cEquals4 -> print("4 ens")
+                    cSmall -> print("lille")
+                    cGreat -> print("stor")
+                    cHouse -> print("hus")
+                    cYatzy -> print("yatzy")
+                    cChance -> print("chance")
+                    else -> { // Note the block
+                        print("hovsa")
+                    }
+                }
+
+            }
+        }
+        return score
+    }
+
+    private fun getResultOfonesToSix(text: CharSequence): Pair<String, Int> {
+        val pair = Pair("x", 1)
+        return pair
     }
 
 }

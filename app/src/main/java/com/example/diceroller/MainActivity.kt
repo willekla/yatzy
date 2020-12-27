@@ -1,5 +1,6 @@
 package com.example.diceroller
 
+
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.diceroller.com.example.diceroller.Player
+import com.example.diceroller.com.example.diceroller.Yatzy
 import com.example.diceroller.databinding.ActivityMainBinding
 
 
@@ -61,25 +63,25 @@ class MainActivity : AppCompatActivity() {
         // get reference to ImageView
         val clickTerning1 = binding.terning1
         clickTerning1.setOnClickListener {
-            t1.lockUnlock(findViewById(binding.terning1.id))
+            t1.lockUnlock(findViewById(binding.terning1.id), count)
         }
 
         val clickTerning2 = binding.terning2
         clickTerning2.setOnClickListener {
-            t2.lockUnlock(findViewById(binding.terning2.id))
+            t2.lockUnlock(findViewById(binding.terning2.id), count)
         }
 
         val clickTerning3 = binding.terning3
         clickTerning3.setOnClickListener {
-            t3.lockUnlock(findViewById(binding.terning3.id))
+            t3.lockUnlock(findViewById(binding.terning3.id), count)
         }
         val clickTerning4 = binding.terning4
         clickTerning4.setOnClickListener {
-            t4.lockUnlock(findViewById(binding.terning4.id))
+            t4.lockUnlock(findViewById(binding.terning4.id), count)
         }
         val clickTerning5 = binding.terning5
         clickTerning5.setOnClickListener {
-            t5.lockUnlock(findViewById(binding.terning5.id))
+            t5.lockUnlock(findViewById(binding.terning5.id), count)
         }
         // Do a dice roll when the app starts
         rollDices()
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             if (listOfPlayers.isNotEmpty()) {
                 binding.message.removeAllViews()
                 val tv = TextView(this)
-                tv.text = yatzy.getResultAsText()
+                tv.text = yatzy.getResultAsText(this.applicationContext)
 
                 radioGroup = RadioGroup(this)
                 val options = yatzy.getResultAsArray()
@@ -115,9 +117,6 @@ class MainActivity : AppCompatActivity() {
                     rb.id = View.generateViewId()
                     // add radio button to the radio group
                     radioGroup.addView(rb)
-
-                    // Get radio group selected item using on checked change listener
-
                 }
 
                 radioGroup.setOnCheckedChangeListener { group, checkedId ->
@@ -127,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG).show()
 
 
-                    player.setChoice(radio.text)
+                    player.setScore(yatzy.getScore(this.applicationContext, radio.text))
                     createConfirmButton(radio.text)
 
                     currentPlayer++
@@ -154,7 +153,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setTextOnRollbutton(player: Player, count: Int) {
-        val txt = player.getName() + getString(R.string.slag_nr) + count
+        val txt = player.getName() + this.applicationContext.getString(R.string.throw_number) + count
         if (count < 4 ) {
             binding.rollbutton.setText(txt)
         } else {
@@ -212,7 +211,7 @@ class MainActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        dynamicButton.text = getString(R.string.ok_valg)
+        dynamicButton.text = getString(R.string.ok_choise)
         dynamicButton.setBackgroundColor(Color.GREEN)
 
         dynamicButton.setOnClickListener {

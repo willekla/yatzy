@@ -6,10 +6,6 @@ class Dice() {
     private var dots = 1
     private var locked = false
 
-    fun lock() {
-        locked = true
-    }
-
     // member function
     fun unlock() {
         locked = false
@@ -20,7 +16,7 @@ class Dice() {
     }
 
 
-    fun getDots (): Int {
+    fun getDots(): Int {
         return dots
     }
 
@@ -28,14 +24,14 @@ class Dice() {
         if (!locked) {
             dots = (1..6).random()
             var drawableResource = this.getImage()
-            diceImage.setImageResource(drawableResource  )
+            diceImage.setImageResource(drawableResource)
             diceImage.contentDescription = dots.toString()
         }
     }
 
-    fun getImage(): Int {
+    private fun getImage(): Int {
         var drawableResource = 0
-        if (!islocked()){
+        if (!islocked()) {
             drawableResource = when (dots) {
                 1 -> R.drawable.dice_1
                 2 -> R.drawable.dice_2
@@ -44,7 +40,7 @@ class Dice() {
                 5 -> R.drawable.dice_5
                 else -> R.drawable.dice_6
             }
-        } else{
+        } else {
             drawableResource = when (dots) {
                 1 -> R.drawable.dice_1_last
                 2 -> R.drawable.dice_2_last
@@ -57,14 +53,14 @@ class Dice() {
         return drawableResource
     }
 
-    fun lockUnlock(findViewById: ImageView) {
-       if (locked){
+    fun lockUnlock(findViewById: ImageView, count: Int) {
+        if (locked) {
             unlockDice()
-        } else{
+        } else if (count > 1) {
             lockDice()
         }
         val diceImage: ImageView = findViewById
-        diceImage.setImageResource(getImage()  )
+        diceImage.setImageResource(getImage())
     }
 
     private fun lockDice() {
